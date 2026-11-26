@@ -1,0 +1,50 @@
+{
+  "name": "airsaathi",
+  "version": "1.0.0",
+  "description": "Urban Air Quality Assistant - Deterministic exposure minimization planner respecting locked work hours with complete bilingual English/Hindi accessibility",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajit9147-dev/airsaathi.git"
+  },
+  "keywords": [
+    "air-quality",
+    "urban-health",
+    "environmental-intelligence",
+    "pm25",
+    "deterministic-planner",
+    "accessibility",
+    "bilingual",
+    "hindi",
+    "hack2skill"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:coverage": "node --test --experimental-test-coverage test/*.test.mjs",
+    "build:demo": "node build-demo.mjs",
+    "typecheck": "tsc -p .",
+    "lint": "tsc -p . && prettier --check \"src/**/*.{ts,tsx,mjs}\" \"server/**/*.mjs\" \"netlify/**/*.mjs\" \"test/*.test.mjs\" \"*.mjs\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,mjs}\" \"server/**/*.mjs\" \"netlify/**/*.mjs\" \"test/*.test.mjs\" \"*.mjs\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,mjs}\" \"server/**/*.mjs\" \"netlify/**/*.mjs\" \"test/*.test.mjs\" \"*.mjs\"",
+    "check": "npm run lint && npm test && npm run build && npm run build:demo"
+  },
+  "dependencies": {
+    "@netlify/blobs": "11.1.10",
+    "@netlify/identity": "2.0.1",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.3",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "0.25.12",
+    "playwright": "^1.65.1",
+    "prettier": "^3.10.1",
+    "typescript": "^5.9.3"
+  }
+}

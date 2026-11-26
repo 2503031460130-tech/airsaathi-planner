@@ -1,0 +1,19 @@
+[build]
+command = "npm run build"
+publish = "public"
+[build.environment]
+NODE_VERSION = "22"
+[functions]
+node_bundler = "esbuild"
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+Referrer-Policy = "no-referrer"
+X-Frame-Options = "DENY"
+Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+
+[[headers]]
+for = "/main.*"
+[headers.values]
+Cache-Control = "public, max-age=3600"

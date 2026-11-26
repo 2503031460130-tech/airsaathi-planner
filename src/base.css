@@ -1,0 +1,133 @@
+:root {
+  --ds-page: #fffdfb;
+  --ds-raised: #f5f1ee;
+  --ds-ink: #4b3330;
+  --ds-ink-2: #705b57;
+  --ds-ink-4: #d5ceca;
+  --ds-hairline: #e1d8d2;
+  --ds-teal: #357f71;
+  font-family: Arial, "Noto Sans Devanagari", sans-serif;
+  color: var(--ds-ink);
+  background: #f3eee8;
+  font-size: 16px;
+  line-height: 1.65;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 24px 50px;
+  background: var(--ds-page);
+}
+h1,
+h2 {
+  line-height: 1.25;
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+h1 {
+  font-size: 36px;
+  max-width: 700px;
+  margin: 20px 0;
+}
+header {
+  margin-bottom: 26px;
+}
+.fact,
+footer {
+  font-size: 12px;
+  color: var(--ds-ink-2);
+}
+.callout {
+  padding: 16px;
+  border-left: 3px solid var(--ds-teal);
+  font-size: 14px;
+}
+.callout strong {
+  display: block;
+}
+.warning {
+  border-color: #9b562d;
+}
+.group {
+  margin: 40px 0;
+}
+.group h2 {
+  font-size: 26px;
+}
+.group p {
+  font-size: 14px;
+}
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+footer {
+  border-top: 1px solid var(--ds-hairline);
+  padding-top: 24px;
+  margin-top: 40px;
+}
+@media (min-width: 800px) {
+  .page {
+    padding: 36px 44px;
+  }
+  h1 {
+    font-size: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+.group > button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--ds-hairline);
+  border-radius: 8px;
+  background: var(--ds-ink);
+  color: var(--ds-page);
+  cursor: pointer;
+}
+.air-field input[aria-invalid="true"] {
+  border: 2px solid #9b562d;
+}
+.air-field input:disabled {
+  opacity: 0.7;
+}
+.air-table th {
+  font-weight: 700;
+}
+
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -48px;
+  padding: 10px 14px;
+  background: #fff;
+  color: #0b3d2e;
+  border: 2px solid #0b3d2e;
+  border-radius: 6px;
+  z-index: 10;
+}
+.skip-link:focus {
+  top: 8px;
+}
+.page:focus {
+  outline: none;
+}

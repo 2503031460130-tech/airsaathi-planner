@@ -1,0 +1,9 @@
+node_modules/
+public/
+.netlify/
+.env
+.env.*
+*.log
+screenshots/
+private/
+public-demo/
