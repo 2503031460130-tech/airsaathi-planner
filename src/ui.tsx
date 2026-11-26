@@ -5,7 +5,7 @@ type Children = { children?: ReactNode };
 export const FileCard = ({ children }: Children) => (
   <>
     <a className="skip-link" href="#main-content">
-      Skip to content / सामग्री पर जाएँ
+      Skip to content / सामग्री पर जाएं
     </a>
     <main className="page" id="main-content" tabIndex={-1}>
       {children}

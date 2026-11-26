@@ -2,7 +2,7 @@
 
 > **A realistic, deterministic schedule planner that helps urban citizens minimize outdoor air pollution exposure without moving fixed work hours, requiring zero spend, and providing complete English & Hindi bilingual accessibility.**
 
-[![CI Status](https://github.com/gajit9147-dev/airsaathi/actions/workflows/ci.yml/badge.svg)](https://github.com/gajit9147-dev/airsaathi/actions)
+[![CI Status](https://github.com/2503031460130-tech/airsaathi-planner/actions/workflows/ci.yml/badge.svg)](https://github.com/2503031460130-tech/airsaathi-planner/actions)
 [![Demo](https://img.shields.io/badge/Demo-airsaathi--demo.vercel.app-brightgreen)](https://airsaathi-demo.vercel.app)
 [![Video Walkthrough](https://img.shields.io/badge/YouTube-Video%20Demo-red)](https://youtu.be/3s8w1_sLSGU)
 [![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-blue)](#data-and-licences)
@@ -210,7 +210,7 @@ npm run check
   - Fully demonstrates bilingual planning, integrity scenarios, and accessible controls without network reliance.
 - **Video Walkthrough**: [https://youtu.be/3s8w1_sLSGU](https://youtu.be/3s8w1_sLSGU)
   - Full demonstration of schedule inputs, timing optimization, Hindi localization, and recorded trial output.
-- **GitHub Repository**: [https://github.com/gajit9147-dev/airsaathi](https://github.com/gajit9147-dev/airsaathi)
+- **GitHub Repository**: [https://github.com/2503031460130-tech/airsaathi-planner](https://github.com/2503031460130-tech/airsaathi-planner)
 
 ---
 

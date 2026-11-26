@@ -20,6 +20,7 @@ import { PlanResultSection } from "./PlanResult";
 import { EvidenceGroup } from "./EvidenceGroup";
 import type { DataSource, ForecastData } from "./contracts";
 import { classify, indiaDate } from "./air-data.mjs";
+
 /** `__DEMO_ONLY__` is replaced at build time (see build.mjs / build-demo.mjs). */
 export function App() {
   const demoOnly = __DEMO_ONLY__;
@@ -39,10 +40,12 @@ export function App() {
     [dataSource, setDataSource] = useState<DataSource>("demo");
   const requestId = useRef(0);
   const base = hindi ? messages.hi : messages.en;
+
   // Keep the page language in sync so assistive technology reads the whole page in the chosen language.
   useEffect(() => {
     document.documentElement.lang = hindi ? "hi" : "en";
   }, [hindi]);
+
   const strings = demoOnly
     ? {
         ...base,
@@ -62,8 +65,10 @@ export function App() {
             }),
       }
     : base;
+
   const forecastDate = indiaDate(Date.now(), 1);
   const currentStatus = classify(forecast);
+
   // Dropped from the public demo bundle at build time.
   const fetchPublic = __DEMO_ONLY__
     ? undefined
@@ -88,6 +93,7 @@ export function App() {
           setDataSource("forecast");
         }
       };
+
   const { planResult, error } = computePlan({
     dataSource,
     forecast,
@@ -101,6 +107,7 @@ export function App() {
     combineTrip,
     errandKm,
   });
+
   const numberField = (
     label: string,
     value: number,
@@ -119,6 +126,7 @@ export function App() {
       }}
     />
   );
+
   return (
     <FileCard>
       <div lang={hindi ? "hi" : "en"} className="air-content">
@@ -130,6 +138,7 @@ export function App() {
             {hindi ? "English" : "हिंदी"}
           </button>
         </div>
+
         <Header
           title={
             hindi
@@ -151,6 +160,7 @@ export function App() {
               : "Fixed work hours. Every step costs ₹0. Make room for a more practical day."
           }
         />
+
         <Callout
           title={
             dataSource === "demo" ? strings.demoTitle : strings.forecastTitle
@@ -160,6 +170,7 @@ export function App() {
             ? strings.demoWarning
             : `${strings.forecastWarning} ${strings.date}: ${forecastDate}.`}
         </Callout>
+
         <div className="air-data-controls">
           {demoOnly ? (
             <p role="note">
@@ -180,6 +191,7 @@ export function App() {
                 : `${city} · ${strings.load}`}
             </button>
           )}
+
           {!demoOnly && (
             <button
               type="button"
@@ -195,6 +207,7 @@ export function App() {
             </button>
           )}
         </div>
+
         <div className="air-provenance" role="status" aria-live="polite">
           {dataSource === "forecast" ? (
             <>
@@ -214,17 +227,21 @@ export function App() {
                   ? hindi
                     ? "पूर्वानुमान लाने में समस्या हुई। डेमो उपलब्ध है।"
                     : fetchError
-                  : forecast?.error
-                    ? hindi
-                      ? "रीफ्रेश नहीं हुआ, पिछला पूर्वानुमान रखा गया।"
-                      : forecast.error
-                    : strings.privacy}
+                  : !forecast
+                    ? strings.privacy
+                    : forecast.error
+                      ? hindi
+                        ? "रीफ़्रेश नहीं हुआ, पिछला पूर्वानुमान रखा गया।"
+                        : forecast.error
+                      : `${strings.retrieved} ${forecast.retrievedAt} IST.`}
               </p>
               {forecast && (
                 <p>
-                  {strings.retrieved}:{" "}
-                  {new Date(forecast.retrievedAt).toLocaleString("en-IN", {
+                  {strings.retrieved}{" "}
+                  {new Date(forecast.retrievedAt).toLocaleTimeString("en-GB", {
                     timeZone: "Asia/Kolkata",
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}{" "}
                   IST. {strings.unknownRun} {forecast.city} · {forecastDate}
                 </p>
@@ -234,7 +251,8 @@ export function App() {
             <p>{strings.demoStatus}</p>
           )}
         </div>
-        <div className="air-layout">
+
+        <div className="air-body">
           <section className="air-panel" aria-labelledby="setup">
             <h2 id="setup">{hindi ? "01 / आपका दिन" : "01 / Your day"}</h2>
             <label className="air-field" htmlFor="city-select">
@@ -244,33 +262,26 @@ export function App() {
                 aria-label={hindi ? "शहर चुनें" : "Select city"}
                 value={city}
                 onChange={(e) => {
-                  ++requestId.current;
                   setCity(e.target.value);
                   setPlanShown(false);
-                  setForecast(null);
-                  setFetchPhase("idle");
-                  setFetchError("");
                 }}
               >
-                {[
-                  "Delhi",
-                  "Vadodara",
-                  "Mumbai",
-                  "Lucknow",
-                  "Kanpur",
-                  "Kolkata",
-                ].map((x) => (
-                  <option key={x}>{x}</option>
-                ))}
+                <option value="Delhi">Delhi</option>
+                <option value="Vadodara">Vadodara</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Lucknow">Lucknow</option>
+                <option value="Kanpur">Kanpur</option>
+                <option value="Kolkata">Kolkata</option>
               </select>
             </label>
-            <fieldset className="air-pair">
-              <legend className="air-label">
+
+            <fieldset className="air-fieldset">
+              <legend>
                 {hindi
                   ? "काम + आने-जाने का तय समय"
                   : "Locked work + commute block"}
               </legend>
-              <div className="air-two">
+              <div className="air-row">
                 {numberField(
                   hindi ? "शुरू / घंटा" : "Starts / hour",
                   workStart,
@@ -287,21 +298,33 @@ export function App() {
                 )}
               </div>
             </fieldset>
-            <fieldset className="air-pair">
-              <legend className="air-label">
+
+            <fieldset className="air-fieldset">
+              <legend>
                 {hindi
                   ? "एक घंटे की सैर के लिए उपलब्ध समय"
                   : "Available range for a one-hour walk"}
               </legend>
-              <div className="air-two">
-                {numberField(strings.from, walkStart, setWalkStart, 6, 19)}
-                {numberField(strings.until, walkEnd, setWalkEnd, 7, 20)}
+              <div className="air-row">
+                {numberField(
+                  hindi ? "से / घंटा" : strings.from,
+                  walkStart,
+                  setWalkStart,
+                  6,
+                  19,
+                )}
+                {numberField(
+                  hindi ? "तक / घंटा" : strings.until,
+                  walkEnd,
+                  setWalkEnd,
+                  7,
+                  20,
+                )}
               </div>
             </fieldset>
 
-            <label className="air-check" htmlFor="combine-trip-checkbox">
+            <label className="air-check">
               <input
-                id="combine-trip-checkbox"
                 type="checkbox"
                 checked={combineTrip}
                 onChange={(e) => {
@@ -313,8 +336,10 @@ export function App() {
                 ? "मौजूदा यात्रा में काम जोड़कर अलग गाड़ी-यात्रा बच सकती है"
                 : "I can combine an errand with an existing trip and avoid a separate vehicle trip"}
             </label>
+
             {combineTrip &&
               numberField(strings.distance, errandKm, setErrandKm, 0, 200)}
+
             <label className="air-field" htmlFor="scenario-select">
               {hindi ? "विश्वसनीयता टेस्ट" : "Demo-only integrity scenario"}
               <select
@@ -334,6 +359,7 @@ export function App() {
                 <option value="stale">{strings.stale}</option>
               </select>
             </label>
+
             <button
               className="air-primary"
               type="button"
@@ -346,6 +372,7 @@ export function App() {
               {hindi ? "मेरा प्लान देखें" : "Make my plan"} →
             </button>
           </section>
+
           <PlanResultSection
             strings={strings}
             hindi={hindi}
@@ -360,6 +387,7 @@ export function App() {
             workEnd={workEnd}
           />
         </div>
+
         <EvidenceGroup
           strings={strings}
           hindi={hindi}
@@ -368,6 +396,7 @@ export function App() {
           forecast={forecast}
           planResult={planResult}
         />
+
         <Group label={strings.trust}>
           <Paragraph>{strings.trustText}</Paragraph>
           {dataSource === "forecast" && (
@@ -401,7 +430,9 @@ export function App() {
             </TextLink>
           </Paragraph>
         </Group>
+
         {!demoOnly && <PrivateTools hindi={hindi} combineTrip={combineTrip} />}
+
         <Closing>
           {demoOnly
             ? hindi
