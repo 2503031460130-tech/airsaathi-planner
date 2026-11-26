@@ -1,6 +1,13 @@
 /**
- * @param {{ phase: string, data: { fromCache?: boolean } | null, currentStatus: string }} input
- * @returns {"loading" | "unavailable" | "loadRequired" | "old" | "partial" | "cached" | "connected"}
+ * Derives the display status key for the forecast data panel from phase and data freshness.
+ * Maps the combination of fetch lifecycle phase, data presence, and freshness classification
+ * to a UI-renderable string key that selects the appropriate bilingual message.
+ *
+ * @param {{ phase: string, data: import("./contracts").ForecastData | null, currentStatus: import("./contracts").DataStatus }} input - Current fetch lifecycle state
+ * @param {"loading" | "error" | "ready" | string} input.phase - Current fetch lifecycle phase
+ * @param {import("./contracts").ForecastData | null} input.data - Latest ingested forecast payload, or null if unavailable
+ * @param {string} input.currentStatus - Classified data freshness from {@link classify}
+ * @returns {"loading" | "unavailable" | "loadRequired" | "old" | "partial" | "cached" | "connected"} UI message key
  */
 export function forecastStatus({ phase, data, currentStatus }) {
   if (phase === "loading") return "loading";

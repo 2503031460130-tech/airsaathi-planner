@@ -44,6 +44,16 @@ export function validateExplain(input) {
     throw Error("Invalid explanation request");
   return { actionIds: [...input.actionIds], language: input.language };
 }
+/**
+ * Validates the AI model response against strict safety and schema constraints.
+ * Rejects numeric claims, HTML, health guarantees, wrong-language responses, and duplicate IDs.
+ *
+ * @param {any} raw - Raw parsed JSON object from the AI model
+ * @param {string[]} ids - Approved action IDs that were requested
+ * @param {"en" | "hi"} language - Expected response language
+ * @returns {{ id: string, text: string }[]} Validated explanation array
+ * @throws {Error} If any explanation violates structural or content safety rules
+ */
 export function validateResponse(raw, ids, language) {
   if (
     !raw ||
@@ -71,6 +81,13 @@ export function validateResponse(raw, ids, language) {
     throw Error("Duplicate action");
   return raw.explanations.map((x) => ({ id: x.id, text: x.text }));
 }
+/**
+ * Constructs a privacy-preserving AI prompt for generic action explanations.
+ * Zero PII, zero routine data, and zero personal context are included.
+ *
+ * @param {{ actionIds: string[], language: "en" | "hi" }} input - Validated explanation request
+ * @returns {string} Safe, structured prompt string for the AI model
+ */
 export function buildPrompt(input) {
   const v = validateExplain(input);
   return `Explain these general lower-emission or indoor-source-control action IDs in ${v.language === "hi" ? "Hindi" : "English"}: ${v.actionIds.join(", ")}. Return JSON only: {"explanations":[{"id":"approved action ID","text":"brief plain explanation"}]}. Do not use numbers, health claims, safety guarantees, personal advice, invented measurements, HTML or additional action IDs. no-idling means reduce unnecessary engine idling when safely parked; source-control means avoid indoor smoke and unnecessary burning; combine-trip means an optional separate vehicle errand can be combined only when practical. No information about any person is supplied.`;

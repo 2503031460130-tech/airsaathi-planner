@@ -1,6 +1,22 @@
 import { createRateLimit } from "./rate-limit.mjs";
 import { explain, validateExplain } from "./ai.mjs";
+
+/** Maximum allowed request body size in bytes for AI explanation payloads. */
 export const MAX_BODY_BYTES = 1024;
+
+/**
+ * Creates the AI explanation request handler with configurable dependencies.
+ * Validates method, content-type, body size, action allowlist, and rate limits before
+ * forwarding to the AI generation layer.
+ *
+ * @param {object} [options={}] - Handler configuration
+ * @param {() => string | undefined} [options.getKey] - API key supplier (default: GEMINI_API_KEY env)
+ * @param {string} [options.model] - Gemini model identifier
+ * @param {Function} [options.generate] - AI generation function (default: explain)
+ * @param {() => boolean} [options.enabled] - Feature flag supplier (default: AIRSAATHI_AI_ENABLED env)
+ * @param {Function} [options.take] - Rate limit token supplier (default: createRateLimit())
+ * @returns {(req: { method: string, body: string, contentType?: string }) => Promise<{ status: number, headers?: object, body: object }>} Async request handler
+ */
 export function createHandler({
   getKey = () => process.env.GEMINI_API_KEY,
   model = "gemini-3.5-flash-lite",

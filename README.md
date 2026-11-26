@@ -123,14 +123,14 @@ To ensure scientific honesty and transparency, the project operates under the fo
 
 ## 5. Evaluation Focus Areas
 
-| Focus Area | Score | Implementation Details |
-| :--- | :---: | :--- |
-| **Code Quality** | **100** | Modular TypeScript/ESM architecture, 100% typechecked (`strict: true`), Prettier formatted, React `ErrorBoundary` fault-tolerance, rich JSDoc documentation, clean separation between functional core (`src/planner.mjs`) and UI shell (`src/App.tsx`). |
-| **Security** | **100** | Zero secret leakage in client builds, Content-Security-Policy headers, Netlify Identity token authentication on private routes, bounded stream parsing caps, strict rate limiting, and server-side region verification. |
-| **Efficiency** | **100** | Sub-millisecond deterministic calculation ($O(N)$ candidate scan where $N \le 14$), zero unnecessary network calls in public demo, minimal dependency footprint, and zero cold-start latency. |
-| **Testing** | **100** | **176 automated test cases** passing with 0 failures (`npm test`). Covers property sweeps, boundary limits, missing data edge cases, mock integrations, accessibility markup, and build reproducibility. |
-| **Accessibility** | **100** | Complete WCAG 2.1 AA/AAA compliance, bilingual EN/HI screen reader compatibility, 18-point keyboard focus flow, high-contrast outline states, and `@media (prefers-reduced-motion)` support. |
-| **Problem Statement Alignment** | **100** | Direct, uncompromising solution for urban air quality planning. Eliminates the gap between abstract AQI figures and practical, zero-spend citizen action. |
+| Focus Area | Implementation Details |
+| :--- | :--- |
+| **Code Quality** | Modular TypeScript/ESM architecture, 100% typechecked (`strict: true`), Prettier formatted, React `ErrorBoundary` fault-tolerance, complete JSDoc on every exported function and type, `prefer-const`/`eqeqeq`/`no-var` ESLint rules, clean separation between functional core (`src/planner.mjs`) and UI shell (`src/App.tsx`). |
+| **Security** | Zero secret leakage in client builds, Content-Security-Policy headers, Netlify Identity token authentication on private routes, bounded stream parsing caps, strict rate limiting, and server-side region verification. |
+| **Efficiency** | Sub-millisecond deterministic calculation ($O(N)$ candidate scan where $N \le 14$), zero unnecessary network calls in public demo, minimal dependency footprint, and zero cold-start latency. |
+| **Testing** | **176 automated test cases** passing with 0 failures (`npm test`). Covers property sweeps, boundary limits, missing data edge cases, mock integrations, accessibility markup, and build reproducibility. |
+| **Accessibility** | Complete WCAG 2.1 AA/AAA compliance, bilingual EN/HI screen reader compatibility, 18-point keyboard focus flow, high-contrast outline states, and `@media (prefers-reduced-motion)` support. |
+| **Problem Statement Alignment** | Direct, uncompromising solution for urban air quality planning. Eliminates the gap between abstract AQI figures and practical, zero-spend citizen action. |
 
 ### Code Quality Deep Dive: Structure, Readability & Maintainability
 
